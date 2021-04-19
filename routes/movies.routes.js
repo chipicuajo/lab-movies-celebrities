@@ -36,6 +36,34 @@ router.get('/movies/:id', (req,res)=>{
     });
 })
 
+/* EDIT */
+router.get('/movies/:id/edit', (req,res)=>{
+    const {id} = req.params
+    Movie.findById(id)
+    .then((movie) => {
+        Celebrity.find(this.cast)
+        .then((selectedCelebrities) => {
+            Celebrity.find()
+            .then((celebrities) => res.render("movies/edit-movie.hbs", {movie, selectedCelebrities, celebrities}))
+            .catch((err) => console.log(err.message))
+        })
+        .catch((err) => console.log(err.message))
+    })
+    .catch((err) => console.log(err.message))
+})
+
+router.post("/movies/:id/edit", (req, res) => {
+    const {id} = req.params
+    const {title, genre, plot, cast} = req.body
+    Movie.findByIdAndUpdate(id,  {title, genre, plot, cast})
+    .then(() => res.redirect("/movies/" + id))
+    .catch((err) => {
+        res.render("/movies/" + id + "/edit")
+    })
+})
+
+
+
 /* DELETE */
 router.post('/movies/:id/delete', (req, res) => {
     const {id} = req.params;
