@@ -3,17 +3,17 @@ const { Schema, model } = require("mongoose");
 const modelSchema = new Schema(
   {
     name: String,
-    occupation: { 
+    occupation: {
       type: String,
-      enum: ['actors', 'singer', 'comedian', 'unknown']
+      enum: ["actor", "singer", "comedian", "unknown"],
     },
     catchPhrase: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
