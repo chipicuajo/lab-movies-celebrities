@@ -14,7 +14,11 @@
     <label for="cast">Cast</label>
     <select name="cast" id="cast" multiple>
         {{#each celebrities}}
+        {{#if this.selected}}
               <option value={{this.id}} selected>{{this.name}}</option>
+        {{else}}
+              <option value={{this.id}}>{{this.name}}</option>
+        {{/if}}
         {{/each}}
     </select>
     <button type="Submit">Submit</button>

@@ -40,12 +40,18 @@ router.get('/movies/:id', (req,res)=>{
 router.get('/movies/:id/edit', (req,res)=>{
     const {id} = req.params
     Movie.findById(id)
+    .populate('cast')
     .then((movie) => {
-        Celebrity.find(this.cast)
-        .then((selectedCelebrities) => {
-            Celebrity.find()
-            .then((celebrities) => res.render("movies/edit-movie.hbs", {movie, selectedCelebrities, celebrities}))
-            .catch((err) => console.log(err.message))
+        Celebrity.find()
+        .then((celebrities) => {
+            movie.cast.forEach((element,index) => {
+                celebrities.forEach((celebrity,index) => {
+                    if(celebrity._id.equals(element._id)){
+                        celebrity.selected = true
+                    }
+                })
+            })
+            res.render("movies/edit-movie.hbs", {movie:movie, celebrities})
         })
         .catch((err) => console.log(err.message))
     })
